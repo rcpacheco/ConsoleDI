@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ConsoleDI
 {
-    class Program
+    internal static class Program
     {
         public static IServiceProvider ServiceProvider { get; private set; }
 

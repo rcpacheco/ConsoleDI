@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ConsoleDI
 {
@@ -18,6 +16,7 @@ namespace ConsoleDI
         {
             var message = configuration["Message"];
             Console.WriteLine(message);
+            Console.WriteLine($"Arguments: {args.Length}");
         }
     }
 }
