@@ -7,8 +7,6 @@ namespace ConsoleDI
 {
     internal static class Program
     {
-        public static IServiceProvider ServiceProvider { get; private set; }
-
         public static IConfiguration Configuration { get; private set; }
 
         static void Main(string[] args)
@@ -19,20 +17,13 @@ namespace ConsoleDI
 
             Configuration = builder.Build();
 
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
+            var serviceProvider = new ServiceCollection()
+                .AddSingleton<IConfiguration>(Configuration)
+                .AddScoped<Application>()
+                .BuildServiceProvider();
 
-            ServiceProvider = serviceCollection.BuildServiceProvider();
-            var scope = ServiceProvider.CreateScope();
-            var app = scope.ServiceProvider.GetRequiredService<Application>();
+            var app = serviceProvider.GetService<Application>();
             app.Run(args);
-            scope.Dispose();
-        }
-
-        private static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddSingleton<IConfiguration>(Configuration);
-            services.AddScoped<Application>();
         }
     }
 }
